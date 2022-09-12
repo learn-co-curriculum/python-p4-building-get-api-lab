@@ -21,6 +21,10 @@ class TestBakery:
         '''can create records that can be committed to the database.'''
         with app.app_context():
             b = Bakery(name="Mr. Bakery")
+            db.session.add(b)
+            db.session.commit()
+
+            db.session.delete(b)
             db.session.commit()
 
     def test_can_be_retrieved(self):
@@ -32,14 +36,22 @@ class TestBakery:
         '''can create records with a to_dict() method for serialization.'''
         with app.app_context():
             b = Bakery(name="Mr. Bakery")
+            db.session.add(b)
             db.session.commit()
             bs = Bakery.query.first().to_dict()
             assert(bs['id'])
             assert(bs['created_at'])
+        
+            db.session.delete(b)
+            db.session.commit()
 
     def test_can_be_deleted(self):
         '''can delete its records.'''
         with app.app_context():
+            b = Bakery(name="Mr. Bakery")
+            db.session.add(b)
+            db.session.commit()
+
             b = Bakery.query.filter(Bakery.name == "Mr. Bakery")
             for mb in b:
                 db.session.delete(mb)
