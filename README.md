@@ -46,7 +46,7 @@ $ flask run
 
 - Update the `Bakery` and `BakedGood` models to set up the correct associations
   based on the structure of the tables. Use the `relationship()` SQLAlchemy
-  method.
+  method and SQLAlchemy-serializer's `SerializerMixin` class.
 - `flask db init` has already been run. You will need to direct your Flask app
   to a database at `db/app.db`, create models, run a migration with `flask db
   revision --autogenerate -m'<your message>'` and create the database file with

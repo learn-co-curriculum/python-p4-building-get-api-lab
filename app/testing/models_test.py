@@ -1,85 +1,88 @@
 from datetime import date
 
 from app import app
-from models import db, Animal, Zookeeper, Enclosure
+from models import db, Bakery, BakedGood
 
-class TestAnimal:
-    '''Animal model in models.py'''
+class TestBakery:
+    '''Bakery model in models.py'''
 
     with app.app_context():
-        a = Animal.query.filter(Animal.name == "Fluffy")
-        for fluffy in a:
-            db.session.delete(fluffy)
+        b = Bakery.query.filter(Bakery.name == "Mr. Bakery")
+        for mb in b:
+            db.session.delete(mb)
         db.session.commit()
 
     def test_can_instantiate(self):
-        '''can be instantiated with a name and species.'''
-        a = Animal(name="Fluffy", species="Lion")
-        assert(a)
-
-    def test_can_save_to_db(self):
-        '''can be saved to the database.'''
-        with app.app_context():
-            a = Animal(name="Fluffy", species="Lion")
-            db.session.add(a)
-            db.session.commit()
-
-    def test_can_be_retrieved_from_db(self):
-        '''can be retrieved from the database by name.'''
-        with app.app_context():
-            a = Animal.query.filter(Animal.name == "Fluffy").first()
-            assert(a.name == "Fluffy")
+        '''can be instantiated with a name.'''
+        b = Bakery(name="Mr. Bakery")
+        assert(b)
     
-class TestZookeeper:
-    '''Zookeeper model in models.py'''
+    def test_can_be_created(self):
+        '''can create records that can be committed to the database.'''
+        with app.app_context():
+            b = Bakery(name="Mr. Bakery")
+            db.session.commit()
+
+    def test_can_be_retrieved(self):
+        '''can be used to retrieve records from the database.'''
+        with app.app_context():
+            b = Bakery.query.all()
+
+    def test_can_be_serialized(self):
+        '''can create records with a to_dict() method for serialization.'''
+        with app.app_context():
+            b = Bakery(name="Mr. Bakery")
+            db.session.commit()
+            bs = Bakery.query.first().to_dict()
+            assert(bs['id'])
+            assert(bs['created_at'])
+
+    def test_can_be_deleted(self):
+        '''can delete its records.'''
+        with app.app_context():
+            b = Bakery.query.filter(Bakery.name == "Mr. Bakery")
+            for mb in b:
+                db.session.delete(mb)
+            db.session.commit()
+
+class TestBakedGood:
+    '''BakedGood model in models.py'''
 
     with app.app_context():
-        zk = Zookeeper.query.filter(Zookeeper.name == "Bob Barker")
-        for bb in zk:
-            db.session.delete(bb)
+        bg = BakedGood.query.filter(BakedGood.name == "Madeleine")
+        for m in bg:
+            db.session.delete(m)
         db.session.commit()
 
     def test_can_instantiate(self):
-        '''can be instantiated with a name and birthday.'''
-        zk = Zookeeper(name="Bob Barker", birthday=date(1923, 12, 12))
-        assert(zk)
-
-    def test_can_save_to_db(self):
-        '''can be saved to the database.'''
+        '''can be instantiated with a name and price.'''
+        bg = BakedGood(name="Madeleine", price=4)
+        assert(bg)
+    
+    def test_can_be_created(self):
+        '''can create records that can be committed to the database.'''
         with app.app_context():
-            zk = Zookeeper(name="Bob Barker", birthday=date(1923, 12, 12))
-            db.session.add(zk)
+            bg = BakedGood(name="Madeleine")
             db.session.commit()
 
-    def test_can_be_retrieved_from_db(self):
-        '''can be retrieved from the database by name.'''
+    def test_can_be_retrieved(self):
+        '''can be used to retrieve records from the database.'''
         with app.app_context():
-            zk = Zookeeper.query.filter(Zookeeper.name == "Bob Barker").first()
-            assert(zk.name == "Bob Barker")
+            bg = BakedGood.query.all()
 
-class TestEnclosure:
-    '''Enclosure model in models.py'''
-
-    with app.app_context():
-        e = Enclosure.query.filter(Enclosure.environment == "Tundra")
-        for tundra in e:
-            db.session.delete(tundra)
-        db.session.commit()
-
-    def test_can_instantiate(self):
-        '''can be instantiated with an environment and whether it is open to visitors or not.'''
-        e = Enclosure(environment="Tundra", open_to_visitors=True)
-        assert(e)
-
-    def test_can_save_to_db(self):
-        '''can be saved to the database.'''
+    def test_can_be_serialized(self):
+        '''can create records with a to_dict() method for serialization.'''
         with app.app_context():
-            e = Enclosure(environment="Tundra", open_to_visitors=True)
-            db.session.add(e)
+            bg = BakedGood(name="Madeleine")
             db.session.commit()
+            bgs = BakedGood.query.first().to_dict()
+            assert(bgs['id'])
+            assert(bgs['created_at'])
 
-    def test_can_be_retrieved_from_db(self):
-        '''can be retrieved from the database by name.'''
+    def test_can_be_deleted(self):
+        '''can delete its records.'''
         with app.app_context():
-            e = Enclosure.query.filter(Enclosure.environment == "Tundra").first()
-            assert(e.environment == "Tundra")
+            bg = BakedGood.query.filter(BakedGood.name == "Madeleine")
+            for m in bg:
+                db.session.delete(m)
+            db.session.commit()
