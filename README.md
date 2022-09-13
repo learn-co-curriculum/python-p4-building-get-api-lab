@@ -301,8 +301,7 @@ submit.
 
 ## Resources
 
-- [Quickstart - Flask-SQLAlchemy][flask_sqla]
-- [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)
-- [Flask Extensions, Plug-ins, and Related Libraries - Full Stack Python](https://www.fullstackpython.com/flask-extensions-plug-ins-related-libraries.html)
-
-[flask_sqla]: https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/#
+- [Flask - Pallets](https://flask.palletsprojects.com/en/2.2.x/)
+- [GET - Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)
+- [flask.json.jsonify Example Code - Full Stack Python](https://www.fullstackpython.com/flask-json-jsonify-examples.html)
+- [SQLAlchemy-serializer - PyPI](https://pypi.org/project/SQLAlchemy-serializer/)
