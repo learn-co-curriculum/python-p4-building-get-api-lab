@@ -52,4 +52,5 @@ jspm_packages
 
 *.db
 */*.db
+server/instance
 app/migrations/versions/*.py
