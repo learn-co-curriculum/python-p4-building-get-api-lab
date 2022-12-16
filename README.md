@@ -29,8 +29,8 @@
 This is a **test-driven lab**. Run `pipenv install` to create your virtual
 environment and `pipenv shell` to enter the virtual environment. Then run
 `pytest -x` to run your tests. Use these instructions and `pytest`'s error
-messages to complete your work in the `app/` folder. Remember to set up your
-environment in the `app/` folder as well:
+messages to complete your work in the `server/` folder. Remember to set up your
+environment in the `server/` folder as well:
 
 ```console
 $ export FLASK_APP=app.py
@@ -54,10 +54,10 @@ $ flask run
   based on the structure of the tables. Use the `relationship()` SQLAlchemy
   method and SQLAlchemy-serializer's `SerializerMixin` class.
 - `flask db init` has already been run. You will need to direct your Flask app
-  to a database at `db/app.db`, create models, run a migration with `flask db
+  to a database at `app.db`, create models, run a migration with `flask db
   revision --autogenerate -m'<your message>'` and create the database file with
   `flask db upgrade`.
-- You should fill your database with the script in `app/seed.py`. (Though you
+- You should fill your database with the script in `server/seed.py`. (Though you
   can certainly write your own if you'd prefer!)
 - `GET /bakeries`: returns an array of JSON objects for all bakeries in the
   database.
