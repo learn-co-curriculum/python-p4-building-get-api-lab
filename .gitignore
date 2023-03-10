@@ -50,7 +50,7 @@ jspm_packages
 # pytest cache
 .pytest_cache
 
-*.db
-*/*.db
-server/instance
+# *.db
+# */*.db
+# server/instance
 app/migrations/versions/*.py
