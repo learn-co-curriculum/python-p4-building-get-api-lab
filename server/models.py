@@ -9,7 +9,12 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 class Bakery(db.Model, SerializerMixin):
-    pass
+    __tablename__ = 'bakeries'
+
+    id = db.Column(db.Integer, primary_key=True)
 
 class BakedGood(db.Model, SerializerMixin):
-    pass
+    __tablename__ = 'baked_goods'
+
+    id = db.Column(db.Integer, primary_key=True)
+    
