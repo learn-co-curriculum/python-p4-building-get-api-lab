@@ -38,9 +38,9 @@ $ export FLASK_RUN_PORT=5555
 ```
 
 In this application, we'll be working on a JSON API to get a list of bakeries
-and their baked goods. We have two models, bakeries and baked goods, in a
-one-to-many relationship. The migrations are already set up. Here's what the ERD
-for these tables looks like:
+and their baked goods. We have two models, bakeries and baked goods, that will
+soon have a one-to-many relationship. The initial migrations are already set up.
+Here's what the ERD for these tables looks like:
 
 ![Bakeries ERD](https://curriculum-content.s3.amazonaws.com/phase-3/sinatra-with-active-record-get-lab/bakeries-baked_goods-erd.png)
 
@@ -53,10 +53,12 @@ $ flask run
 - Update the `Bakery` and `BakedGood` models to set up the correct associations
   based on the structure of the tables. Use the `relationship()` SQLAlchemy
   method and SQLAlchemy-serializer's `SerializerMixin` class.
-- `flask db init` has already been run. You will need to direct your Flask app
-  to a database at `app.db`, create models, run a migration with `flask db
-  revision --autogenerate -m'<your message>'` and create the database file with
-  `flask db upgrade`.
+- `flask db init` has already been run. Run `flask db upgrade head` to create
+  your database with simple `bakeries` and `baked_goods` tables.
+- You will need to direct your Flask app to a database at `app.db`, update your
+  models, run a migration with
+  `flask db revision --autogenerate -m'<your message>'` and update the database
+  file with `flask db upgrade head`.
 - You should fill your database with the script in `server/seed.py`. (Though you
   can certainly write your own if you'd prefer!)
 - `GET /bakeries`: returns an array of JSON objects for all bakeries in the
