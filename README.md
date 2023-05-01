@@ -55,8 +55,7 @@ $ flask run
   method and SQLAlchemy-serializer's `SerializerMixin` class.
 - `flask db init` has already been run. Run `flask db upgrade head` to create
   your database with simple `bakeries` and `baked_goods` tables.
-- You will need to direct your Flask app to a database at `app.db`, update your
-  models, run a migration with
+- You will need to update your models, run a migration with
   `flask db revision --autogenerate -m'<your message>'` and update the database
   file with `flask db upgrade head`.
 - You should fill your database with the script in `server/seed.py`. (Though you
