@@ -21,45 +21,65 @@ class TestApp:
     def test_bakeries_route_returns_list_of_bakery_objects(self):
         '''returns JSON representing models.Bakery objects.'''
         with app.app_context():
-            b = Bakery(name="Mr. Bakery")
+            b = Bakery(name="My Bakery")
             db.session.add(b)
             db.session.commit()
 
             response = app.test_client().get('/bakeries')
             data = json.loads(response.data.decode())
             assert(type(data) == list)
+            
+            contains_my_bakery = False
             for record in data:
                 assert(type(record) == dict)
                 assert(record['id'])
                 assert(record['name'])
                 assert(record['created_at'])
+                if record['name'] == "My Bakery":
+                    contains_my_bakery = True
+            assert(contains_my_bakery)
 
             db.session.delete(b)
             db.session.commit()
 
     def test_bakery_by_id_route(self):
         '''has a resource available at "/bakeries/<int:id>".'''
-        response = app.test_client().get('/bakeries/1')
-        assert(response.status_code == 200)
+        with app.app_context():
+            b = Bakery(name="My Bakery")
+            db.session.add(b)
+            db.session.commit()
+
+            response = app.test_client().get(f'/bakeries/{b.id}')
+            assert(response.status_code == 200)
+            db.session.delete(b)
+            db.session.commit()
 
     def test_bakery_by_id_route_returns_json(self):
         '''provides a response content type of application/json at "/bakeries/<int:id>"'''
-        response = app.test_client().get('/bakeries/1')
-        assert response.content_type == 'application/json'
+        with app.app_context():
+            b = Bakery(name="My Bakery")
+            db.session.add(b)
+            db.session.commit()
+
+            response = app.test_client().get(f'/bakeries/{b.id}')
+            assert response.content_type == 'application/json'
+            db.session.delete(b)
+            db.session.commit()
+        
 
     def test_bakery_by_id_route_returns_one_bakery_object(self):
         '''returns JSON representing one models.Bakery object.'''
         with app.app_context():
-            b = Bakery(name="Mr. Bakery")
+            b = Bakery(name="My Bakery")
             db.session.add(b)
             db.session.commit()
 
-            response = app.test_client().get('/bakeries/1')
+            response = app.test_client().get(f'/bakeries/{b.id}')
             data = json.loads(response.data.decode())
             assert(type(data) == dict)
-            assert(data['id'])
-            assert(data['name'])
-            assert(data['created_at'])
+            assert(data['id'] == b.id)
+            assert(data['name'] == "My Bakery")
+            assert(data['created_at'] )
 
             db.session.delete(b)
             db.session.commit()
@@ -74,11 +94,17 @@ class TestApp:
         response = app.test_client().get('/baked_goods/by_price')
         assert response.content_type == 'application/json'
 
-    def test_baked_goods_by_price_returns_list_of_baked_goods(self):
+    def test_baked_goods_by_price_returns_list_of_baked_goods_in_ascending_order(self):
         '''returns JSON representing one models.Bakery object.'''
         with app.app_context():
-            b = BakedGood(name="Madeleine", price=10)
-            db.session.add(b)
+            prices = [baked_good.price for baked_good in BakedGood.query.all()]
+            highest_price = max(prices)
+
+            b1 = BakedGood(name="Madeleine", price=highest_price + 1)
+            db.session.add(b1)
+            db.session.commit()
+            b2 = BakedGood(name="Donut", price=highest_price - 1)
+            db.session.add(b2)
             db.session.commit()
 
             response = app.test_client().get('/baked_goods/by_price')
@@ -89,9 +115,15 @@ class TestApp:
                 assert(record['name'])
                 assert(record['price'])
                 assert(record['created_at'])
+            
+            prices = [record['price'] for record in data]
+            assert(all(prices[i] <= prices[i+1] for i in range(len(prices) - 1)))
 
-            db.session.delete(b)
+            db.session.delete(b1)
+            db.session.delete(b2)
             db.session.commit()
+            
+            
 
     def test_most_expensive_baked_good_route(self):
         '''has a resource available at "/baked_goods/most_expensive".'''
@@ -106,8 +138,14 @@ class TestApp:
     def test_most_expensive_baked_good_route_returns_one_baked_good_object(self):
         '''returns JSON representing one models.BakedGood object.'''
         with app.app_context():
-            b = BakedGood(name="Madeleine", price=10)
-            db.session.add(b)
+            prices = [baked_good.price for baked_good in BakedGood.query.all()]
+            highest_price = max(prices)
+
+            b1 = BakedGood(name="Madeleine", price=highest_price + 1)
+            db.session.add(b1)
+            db.session.commit()
+            b2 = BakedGood(name="Donut", price=highest_price - 1)
+            db.session.add(b2)
             db.session.commit()
 
             response = app.test_client().get('/baked_goods/most_expensive')
@@ -118,22 +156,27 @@ class TestApp:
             assert(data['price'])
             assert(data['created_at'])
 
-            db.session.delete(b)
+            db.session.delete(b1)
+            db.session.delete(b2)
             db.session.commit()
     
     def test_most_expensive_baked_good_route_returns_most_expensive_baked_good_object(self):
         '''returns JSON representing one models.BakedGood object.'''
         with app.app_context():
-            b = BakedGood(name="Madeleine", price=10)
-            db.session.add(b)
+            prices = [baked_good.price for baked_good in BakedGood.query.all()]
+            highest_price = max(prices)
+
+            b1 = BakedGood(name="Madeleine", price=highest_price + 1)
+            db.session.add(b1)
+            db.session.commit()
+            b2 = BakedGood(name="Donut", price=highest_price - 1)
+            db.session.add(b2)
             db.session.commit()
 
             response = app.test_client().get('/baked_goods/most_expensive')
             data = json.loads(response.data.decode())
-            prices = [baked_good.price for baked_good in BakedGood.query.all()]
-            highest_price = max(prices)
+            assert(data['price'] == b1.price)
 
-            assert(data['price'] == highest_price)
-
-            db.session.delete(b)
+            db.session.delete(b1)
+            db.session.delete(b2)
             db.session.commit()
