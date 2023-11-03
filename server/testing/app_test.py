@@ -94,7 +94,7 @@ class TestApp:
         response = app.test_client().get('/baked_goods/by_price')
         assert response.content_type == 'application/json'
 
-    def test_baked_goods_by_price_returns_list_of_baked_goods_in_ascending_order(self):
+    def test_baked_goods_by_price_returns_list_of_baked_goods_in_descending_order(self):
         '''returns JSON representing one models.Bakery object.'''
         with app.app_context():
             prices = [baked_good.price for baked_good in BakedGood.query.all()]
@@ -117,7 +117,7 @@ class TestApp:
                 assert(record['created_at'])
             
             prices = [record['price'] for record in data]
-            assert(all(prices[i] <= prices[i+1] for i in range(len(prices) - 1)))
+            assert(all(prices[i] >= prices[i+1] for i in range(len(prices) - 1)))
 
             db.session.delete(b1)
             db.session.delete(b2)

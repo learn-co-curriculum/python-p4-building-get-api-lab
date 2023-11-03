@@ -72,8 +72,8 @@ Edit `app.py` to handle the following `GET` requests:
 - `GET /bakeries/<int:id>`: returns a single bakery as JSON with its baked goods
   nested in a list. Use the `id` from the URL to look up the correct bakery.
 - `GET /baked_goods/by_price`: returns a list of baked goods as JSON, sorted by
-  price in **ascending** order. (**HINT**: how can you use SQLAlchemy to sort
-  the baked goods in ascending order?)
+  price in **descending** order. (**HINT**: how can you use SQLAlchemy to sort
+  the baked goods in descending order?)
 - `GET /baked_goods/most_expensive`: returns the single most expensive baked
   good as JSON. (**HINT**: how can you use SQLAlchemy to sort the baked goods in
   **descending** order _and_ limit the number of results?)
@@ -173,41 +173,27 @@ submit.
 [
   {
     "bakery": {
-      "created_at": "2023-11-03 16:16:21",
+      "created_at": "2023-11-03 16:31:32",
       "id": 1,
       "name": "Delightful donuts",
       "updated_at": null
     },
     "bakery_id": 1,
-    "created_at": "2023-11-03 16:16:21",
-    "id": 1,
-    "name": "Chocolate dipped donut",
-    "price": 2.75,
+    "created_at": "2023-11-03 16:31:32",
+    "id": 2,
+    "name": "Apple-spice filled donut",
+    "price": 3.5,
     "updated_at": null
   },
   {
     "bakery": {
-      "created_at": "2023-11-03 16:16:21",
+      "created_at": "2023-11-03 16:31:32",
       "id": 2,
       "name": "Incredible crullers",
       "updated_at": null
     },
     "bakery_id": 2,
-    "created_at": "2023-11-03 16:16:21",
-    "id": 3,
-    "name": "Glazed honey cruller",
-    "price": 3.25,
-    "updated_at": null
-  },
-  {
-    "bakery": {
-      "created_at": "2023-11-03 16:16:21",
-      "id": 2,
-      "name": "Incredible crullers",
-      "updated_at": null
-    },
-    "bakery_id": 2,
-    "created_at": "2023-11-03 16:16:21",
+    "created_at": "2023-11-03 16:31:32",
     "id": 4,
     "name": "Chocolate cruller",
     "price": 3.4,
@@ -215,16 +201,30 @@ submit.
   },
   {
     "bakery": {
-      "created_at": "2023-11-03 16:16:21",
+      "created_at": "2023-11-03 16:31:32",
+      "id": 2,
+      "name": "Incredible crullers",
+      "updated_at": null
+    },
+    "bakery_id": 2,
+    "created_at": "2023-11-03 16:31:32",
+    "id": 3,
+    "name": "Glazed honey cruller",
+    "price": 3.25,
+    "updated_at": null
+  },
+  {
+    "bakery": {
+      "created_at": "2023-11-03 16:31:32",
       "id": 1,
       "name": "Delightful donuts",
       "updated_at": null
     },
     "bakery_id": 1,
-    "created_at": "2023-11-03 16:16:21",
-    "id": 2,
-    "name": "Apple-spice filled donut",
-    "price": 3.5,
+    "created_at": "2023-11-03 16:31:32",
+    "id": 1,
+    "name": "Chocolate dipped donut",
+    "price": 2.75,
     "updated_at": null
   }
 ]
